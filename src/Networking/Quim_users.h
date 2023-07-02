@@ -36,7 +36,7 @@ void Player_controller::Player_fetch_coords(){
    std::cout<<"connection failed :("<<std::endl;                            // AND THIS PART CONNECTS OUR SOCKET TO THE SERVER (IF FAILED SEND AN ERROR MESSAGE)
  }
  // ----------------------------------------------------------------------------------------
- std::string request = "GET /user_index.php?infputx="+std::to_string((int)self_x)+"&infputy="+std::to_string((int)self_y)+"&infputr="+std::to_string((int)self_a)+"&unamed="+_self_name+"&dmode=1 HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\n\r\n";  // NOW THIS IS THE HTTP PROTOCOL STRING USING A GET REQUEST TO FETCH OUR DATA FROM THE WEBSITE
+ std::string request = "GET /user_index.php?infputx="+std::to_string((int)self_x)+"&infputy="+std::to_string((int)self_y)+"&infputr="+std::to_string((int)self_a)+"&unamed="+_self_name+"&dmode=1 HTTP/1.1\r\nHost: " + url + "\r\nConnection: close\r\nContent-Length: "+std::to_string((strlen(_self_name.c_str())))+"\r\n\r\n";  // NOW THIS IS THE HTTP PROTOCOL STRING USING A GET REQUEST TO FETCH OUR DATA FROM THE WEBSITE
  // ----------------------------------------------------------------------------------------
  if(send(socket_desc, request.c_str(), strlen(request.c_str())+1, 0) < 0){                  // AND INSIDE THIS SEGMENT OF CODE WE ARE GOING TO SEND THE REQUEST TO THE SERVER
   std::cout<<"failed to send request..."<<std::endl;                                        // BASICALLY WE ARE ASKING THE SERVER TO GIVE THE DATA FROM THE MYSQL DATABSE USING THE PHP API
