@@ -40,21 +40,20 @@
             }                                                                               // from our database
         }                                                                                   //       
         mysqli_free_result($mansw);
+    }
+    $uname = clean($uname);
+    $kansw = mysqli_query($link, 'SELECT * FROM positions WHERE username = \''.$uname.'\';');   
+    //echo 'num rows: ' . mysqli_num_rows($kansw) . ' query: ' . 'SELECT * FROM positions WHERE username = \''.$uname.'\';'; 
+    if(mysqli_num_rows($kansw) <= 0){
+        mysqli_free_result($kansw);
+        $uname= clean($uname);
+        $query= 'INSERT INTO positions (username, Pos_x,Pos_y,Rot_p) VALUES (\'' .$uname.'\','.$pox.','.$poy.','.$rop.');'; 
+        $answ = mysqli_query($link, $query);
     }else{
-        $uname = clean($uname);
-        $kansw = mysqli_query($link, 'SELECT * FROM positions WHERE username = \''.$uname.'\';');   
-        //echo 'num rows: ' . mysqli_num_rows($kansw) . ' query: ' . 'SELECT * FROM positions WHERE username = \''.$uname.'\';'; 
-        if(mysqli_num_rows($kansw) <= 0){
-            mysqli_free_result($kansw);
-            $uname= clean($uname);
-            $query= 'INSERT INTO positions (username, Pos_x,Pos_y,Rot_p) VALUES (\'' .$uname.'\','.$pox.','.$poy.','.$rop.');'; 
-            $answ = mysqli_query($link, $query);
-        }else{
-            mysqli_free_result($kansw);
-            $uname= clean($uname);
-            $query= 'UPDATE positions SET Pos_x = '.$pox.', Pos_y = '.$poy.', Rot_p = '.$rop.' WHERE username = \''.$uname.'\';'; 
-            $answ = mysqli_query($link, $query);
-        }
+        mysqli_free_result($kansw);
+        $uname= clean($uname);
+        $query= 'UPDATE positions SET Pos_x = '.$pox.', Pos_y = '.$poy.', Rot_p = '.$rop.' WHERE username = \''.$uname.'\';'; 
+        $answ = mysqli_query($link, $query);
     }
     mysqli_free_result($answ);
     mysqli_close($link);
